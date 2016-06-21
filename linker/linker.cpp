@@ -2935,10 +2935,10 @@ bool soinfo::prelink_image() {
         break;
 
       default:
-        if (!relocating_linker) {
-          DL_WARN("%s: unused DT entry: type %p arg %p", get_realpath(),
-              reinterpret_cast<void*>(d->d_tag), reinterpret_cast<void*>(d->d_un.d_val));
-        }
+        //if (!relocating_linker) {
+        //  DL_WARN("%s: unused DT entry: type %p arg %p", get_realpath(),
+        //      reinterpret_cast<void*>(d->d_tag), reinterpret_cast<void*>(d->d_un.d_val));
+        //}
         break;
     }
   }
@@ -3016,15 +3016,15 @@ bool soinfo::link_image(const soinfo_list_t& global_group, const soinfo_list_t& 
 #if !defined(__i386__) // ffmpeg says that they require text relocations on x86
     if (get_application_target_sdk_version() != __ANDROID_API__
         && get_application_target_sdk_version() > 22) {
-      PRINT("%s: has text relocations", get_realpath());
-      DL_ERR("%s: has text relocations", get_realpath());
+      //PRINT("%s: has text relocations", get_realpath());
+      //DL_ERR("%s: has text relocations", get_realpath());
       return false;
     }
 #endif
     // Make segments writable to allow text relocations to work properly. We will later call
     // phdr_table_protect_segments() after all of them are applied and all constructors are run.
-    DL_WARN("%s has text relocations. This is wasting memory and prevents "
-            "security hardening. Please fix.", get_realpath());
+    //DL_WARN("%s has text relocations. This is wasting memory and prevents "
+    //        "security hardening. Please fix.", get_realpath());
     if (phdr_table_unprotect_segments(phdr, phnum, load_bias) < 0) {
       DL_ERR("can't unprotect loadable segments for \"%s\": %s",
              get_realpath(), strerror(errno));
